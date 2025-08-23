@@ -11,8 +11,9 @@ const app = express();
 const corsOptions = {
   origin: [
     "http://localhost:3000",                   
-    "https://saathi-trust.vercel.app/",  
-    /^https:\/\/saathi-trust-.*\.vercel\.app$/    
+    "https://saathi-trust.vercel.app",        
+    /^https:\/\/saathi-trust.*\.vercel\.app$/,
+    /^https:\/\/frontend-.*\.vercel\.app$/    
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
