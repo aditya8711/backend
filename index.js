@@ -18,6 +18,9 @@ app.use("/api/auth", authRoutes);
 
 // Use payment routes
 // paymentRoutes(app);
+app.get("/api/hello" , (req , res)=>{
+  res.json({message : "Hello from backend"});
+})
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -31,3 +34,7 @@ mongoose
     });
   })
   .catch((err) => console.error("MongoDB connection error:", err));
+
+app.get("/api/hello" , (req , res)=>{
+  res.json({message : "Hello from backend"});
+})
