@@ -13,8 +13,9 @@ const app = express();
 const corsOptions = {
   origin: [
     "http://localhost:3000",                    // Local development
-    "https://frontend-roan-chi-17.vercel.app", // Your Vercel deployment
-    "https://frontend-roan-chi-17.vercel.app/" // With trailing slash
+    "https://frontend-roan-chi-17.vercel.app", // Old Vercel deployment
+    "https://frontend-dun-tau-46.vercel.app",  // New Vercel deployment
+    /^https:\/\/frontend-.*\.vercel\.app$/     // Match any frontend-*.vercel.app
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
