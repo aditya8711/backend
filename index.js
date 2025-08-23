@@ -1,9 +1,8 @@
- import dotenv from "dotenv";
+import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
 // import paymentRoutes from "./routes/payment.js"; // <-- Import payment routes
 
