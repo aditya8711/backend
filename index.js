@@ -23,6 +23,13 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.get("/" , (req , res) =>{
+  res.status(200).json({
+    message : "Hey from Backend of Saathi-trust",
+    apiStatus: "Healthy"
+  })
+});
+
 // New health check route for cron jobs and uptime monitors
 app.get("/health", (req, res) => {
   res.status(200).json({
