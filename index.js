@@ -10,10 +10,10 @@ const app = express();
 
 const corsOptions = {
   origin: [
-    "http://localhost:3000",                   
-    "https://saathi-trust.vercel.app",        
+    "http://localhost:3000",
+    "https://saathi-trust.vercel.app",
     /^https:\/\/saathi-trust.*\.vercel\.app$/,
-    /^https:\/\/frontend-.*\.vercel\.app$/    
+    /^https:\/\/frontend-.*\.vercel\.app$/
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -23,10 +23,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+// New health check route for cron jobs and uptime monitors
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    message: "Server is healthy",
+    uptime: process.uptime()
+  });
+});
+
 app.use("/api/auth", authRoutes);
 
 app.get("/api/hello", (req, res) => {
-  res.json({ 
+  res.json({
     message: "Hello from backend",
     timestamp: new Date().toISOString(),
     cors: "Configured for Vercel"
@@ -35,12 +43,13 @@ app.get("/api/hello", (req, res) => {
 
 app.use((err, req, res, next) => {
   console.error("Server error:", err);
-  res.status(500).json({ 
+  res.status(500).json({
     message: err.message || "Internal server error"
   });
 });
+
 app.use("*", (req, res) => {
-  res.status(404).json({ 
+  res.status(404).json({
     message: "Route not found",
     path: req.originalUrl
   });
