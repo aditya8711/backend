@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 const router = express.Router();
-
-// 🔐 REGISTER
+        
+// REGISTER
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   const existing = await User.findOne({ email });
@@ -14,10 +14,12 @@ router.post("/register", async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = new User({ name, email, password: hashedPassword });
   await user.save();
+  let token = jwt.sign({email} , process.env.JWT_SECRET);
+ res.cookie("token", token, { httpOnly: true });
   res.status(201).json({ message: "User registered" });
 });
 
-// 🔐 LOGIN
+// LOGIN
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -27,7 +29,8 @@ router.post("/login", async (req, res) => {
   if (!valid) return res.status(401).json({ message: "Invalid password" });
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-  res.json({ token });
+  res.cookie("token", token, { httpOnly: true });
+  res.json({token});
 });
 
 export default router;
