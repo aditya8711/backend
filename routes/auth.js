@@ -15,7 +15,7 @@ router.post("/register", async (req, res) => {
   const user = new User({ name, email, password: hashedPassword });
   await user.save();
   let token = jwt.sign({email} , process.env.JWT_SECRET);
-  res.cookie("token" , token);
+ res.cookie("token", token, { httpOnly: true });
   res.status(201).json({ message: "User registered" });
 });
 
@@ -29,7 +29,7 @@ router.post("/login", async (req, res) => {
   if (!valid) return res.status(401).json({ message: "Invalid password" });
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-  res.cookie("token" , token);
+  res.cookie("token", token, { httpOnly: true });
   res.json({token});
 });
 
